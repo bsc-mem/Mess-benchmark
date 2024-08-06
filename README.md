@@ -3,7 +3,7 @@
 
 Below figure illustrates the workflow employed by Mess to create bandwidth--latency curves. Mess reads an input configuration file, specifying system setups like the number of sockets, CPU model, and memory technology. Additionally, it includes details about the profiling tools used to read hardware counters (e.g. Perf, PAPI, and Likwid) and lists the hardware counters. This configuration file also defines the experiments to be executed, specifying ranges of read/write ratios, memory stress level, and the number of times each experiment is repeated. For this study, we conducted each experiment three times to enhance the reliability of our measurements. 
 
-![Alt text](./workflow.pdf "Title")
+![Alt text](./workflow.png "Title")
 
 
 Afterward, the workflow establishes a list of experimental points and iterates through them until all points have been executed. For each experiment, initially, we setup the experiment configuration, setting parameters such as read/write ratio and memory stress level. These settings are utilized by the traffic generator to stress main memory. For hugh stress level, the memory traffic generator reaches to the highest issue rate of the load and store operations, thereby creating the highest significant pressure on the memory system. Typically (unless over-saturation exists in the platform, this is the point of the maximum measured bandwidth and latency.
