@@ -4,7 +4,11 @@
 
 ## Repository structure
 
+The general structure of this repository is depicted below. Since Mess benchmark is developed for wide range of platforms, from actual hardware to simulators, from CPUs to GPUs, and from x86 to RISC-V CPUs. To use Mess benchmark to evaluate, the user may adopt the Mess version that is more similar to their target platform. 
 
+
+
+```
 Mess-benchmark
 ├── Actual-hardware
 │   ├── CPU
@@ -22,9 +26,47 @@ Mess-benchmark
         ├── Ramulator2 
         ├── DRAMsim3 
         └── Ramulator 
+```
 
 
-## Workflow
+Below as an example, we show the structure and the main files for Mess benchmark in x86 CPU directory. Other platforms follow similar structure. 
+
+```
+x86
+└── Actual-hardware
+    ├── config
+    │   ├── mn4_DDR4-2666.toml 
+    ├── measuring
+    │   ├── bw 
+    │   ├── lat 
+    │   ├── log 
+    │   ├── output 
+    ├── processing
+    ├── src
+    ├── runner.sh
+    └── submit_main.job
+```
+
+ - mn4_DDR4_2666.toml: exists in the config folder, which describes the system under the study and all the experimental setups. 
+
+ - measuring/bw: the folder contains all the raw bandwidith measurements for each individial experimental points (i.e., each point on bandwidth--latency curves).
+
+ - measuring/lat: the folder contains all the raw latency measurements for each individial experimental points (i.e., each point on bandwidth--latency curves).
+
+ - measuring/log: the folder contains all the logs for each individial experimental points (i.e., each point on bandwidth--latency curves).
+
+ - measuring/output: This folder contains the final bandwidth--latency curves and the .csv files that contains detailed information for each bandwidth--latency point on the curves. 
+
+ - processing: This folder contains all the python codes to parse raw measurements and generate final bandwidth--latency curves and .csv file. 
+
+ - src: This folder contains pointer-chase and workload generator benchmark. 
+
+ - runner.sh: The main script that run the workflow. It execute the full workflow from reading the config file to generating final bandwidth--latency curves. 
+
+ - submit_main.job: This is the script that is used by "runner.sh" and measures one experimental data point (one point on bandwidth--latency curves). 
+
+
+## Workflow (runner.sh)
 
 Below figure illustrates the workflow employed by Mess to create bandwidth--latency curves. Mess **reads** an input configuration file, specifying system setups like the number of sockets, CPU model, and memory technology. Additionally, it includes details about the profiling tools used to read hardware counters (e.g. Perf, PAPI, and Likwid) and lists the hardware counters. This configuration file also defines the experiments to be executed, specifying ranges of read/write ratios, memory stress level, and the number of times each experiment is repeated. For this study, we conducted each experiment three times to enhance the reliability of our measurements. 
 
