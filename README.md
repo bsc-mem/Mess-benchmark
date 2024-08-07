@@ -12,7 +12,7 @@ P. Esmaili-Dokht, F. Sgherzi, V. S. Girelli, I. Boixaderas, M. Carmin, A. Momeni
 
 ## Repository structure
 
-The general structure of this repository is depicted below. Mess benchmark is developed for wide range of platforms, from actual hardware to simulators, from CPUs to GPUs, and from x86 to RISC-V CPUs. To use Mess benchmark to evaluate each platform, the user may adopt the Mess version that is more similar to their target platform. 
+The general structure of this repository is depicted below. Mess benchmark is developed for wide range of platforms, from actual hardware to simulators, from CPUs to GPUs, and from x86 to RISC-V CPUs. To use Mess benchmark to evaluate each platform, the user should use the Mess version located in the directory that is more similar to their target platform. 
 
 
 
