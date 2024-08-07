@@ -29,7 +29,7 @@ Mess-benchmark
 ```
 
 
-Below as an example, we show the structure and the main files for Mess benchmark in x86 CPU directory. Other platforms follow similar structure. 
+Below we show the structure and the main files for Mess benchmark in x86 CPU directory. We picked x86 CPU as an example and other platforms follow similar structure. 
 
 ```
 x86
