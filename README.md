@@ -1,14 +1,18 @@
 # Mess benchmark
+Mess benchmark describes the memory system performance with a family of bandwidth--latency curves. The benchmark covers the full range of the memory traffic intensity, from the unloaded to fully-saturated memory system. It also considers numerous compositions of read and write operations. The Mess benchmark is designed for holistic and detailed memory system characterization, and it is easily adaptive to different target platforms. The current benchmark release covers all major CPU and GPU ISAs: x86, ARM, Power, RISC-V, and NVIDIA’s Parallel Thread Execution (PTX).
 
 
 ## Citation
+
 Please cite the following paper if you find this benchmark useful:
 
-Esmaili-Dokht, P., Sgherzi, F., Girelli, V.S., Boixaderas, I., Carmin, M., Momeni, A., Armejach, A., Mercadal, E., Llort, G., Radojković, P., Moretó, M., Giménez, J., Martorell, X., Ayguadé, E., Labarta, J., Confalonieri, E., Dubey, R., & Adlard, J. (2024). A Mess of Memory System Benchmarking, Simulation and Application Profiling. ArXiv, abs/2405.10170.
+P. Esmaili-Dokht, F. Sgherzi, V. S. Girelli, I. Boixaderas, M. Carmin, A. Momeni, A. Armejach, E. Mercadal, G. Llort, P. Radojkovic, M. Moreto, J. Gimenez, X. Martorell, E. Ayguade, J. Labarta, E. Confalonieri, R. Dubey, and J. Adlard, “A mess of memory system benchmarking, simulation and application profiling,” 2024. [Online]. Available: https://arxiv.org/abs/2405.10170
+
+---To be appear in MICRO 2024
 
 ## Repository structure
 
-The general structure of this repository is depicted below. Since Mess benchmark is developed for wide range of platforms, from actual hardware to simulators, from CPUs to GPUs, and from x86 to RISC-V CPUs. To use Mess benchmark to evaluate, the user may adopt the Mess version that is more similar to their target platform. 
+The general structure of this repository is depicted below. Mess benchmark is developed for wide range of platforms, from actual hardware to simulators, from CPUs to GPUs, and from x86 to RISC-V CPUs. To use Mess benchmark to evaluate each platform, the user may adopt the Mess version that is more similar to their target platform. 
 
 
 
