@@ -1,6 +1,10 @@
 # Mess benchmark
 
 
+## Citation
+Please cite the following paper if you find this benchmark useful:
+
+Esmaili-Dokht, P., Sgherzi, F., Girelli, V.S., Boixaderas, I., Carmin, M., Momeni, A., Armejach, A., Mercadal, E., Llort, G., Radojković, P., Moretó, M., Giménez, J., Martorell, X., Ayguadé, E., Labarta, J., Confalonieri, E., Dubey, R., & Adlard, J. (2024). A Mess of Memory System Benchmarking, Simulation and Application Profiling. ArXiv, abs/2405.10170.
 
 ## Repository structure
 
