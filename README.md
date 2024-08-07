@@ -1,6 +1,31 @@
 # Mess benchmark
 
 
+
+## Repository structure
+
+
+Mess-benchmark
+├── Actual-hardware
+│   ├── CPU
+│   │   ├── x86 
+│   │   ├── ARM 
+│   │   ├── IBM power 
+│   │   └── RISC-V
+│   └── GPU
+│       └── NVIDIA PTX 
+└── Simulators
+    ├── Execution-driven
+    │   ├── gem5 
+    │   └── ZSim 
+    └── Trace-driven
+        ├── Ramulator2 
+        ├── DRAMsim3 
+        └── Ramulator 
+
+
+## Workflow
+
 Below figure illustrates the workflow employed by Mess to create bandwidth--latency curves. Mess **reads** an input configuration file, specifying system setups like the number of sockets, CPU model, and memory technology. Additionally, it includes details about the profiling tools used to read hardware counters (e.g. Perf, PAPI, and Likwid) and lists the hardware counters. This configuration file also defines the experiments to be executed, specifying ranges of read/write ratios, memory stress level, and the number of times each experiment is repeated. For this study, we conducted each experiment three times to enhance the reliability of our measurements. 
 
 <table>
