@@ -1,0 +1,105 @@
+Frontend:
+  impl: SimpleO3
+  memory_access_cycles_recorded_core_6: 101670
+  memory_access_cycles_recorded_core_7: 92911
+  cycles_recorded_core_7: 3200596
+  memory_access_cycles_recorded_core_5: 122436
+  cycles_recorded_core_6: 2945217
+  cycles_recorded_core_5: 3109790
+  cycles_recorded_core_0: 2022327
+  llc_write_misses: 0
+  llc_eviction: 16194
+  memory_access_cycles_recorded_core_1: 96899
+  llc_mshr_unavailable: 0
+  memory_access_cycles_recorded_core_4: 106262
+  llc_write_access: 0
+  llc_read_misses: 18793535
+  cycles_recorded_core_1: 2017783
+  cycles_recorded_core_4: 2780983
+  llc_read_access: 18801959
+  memory_access_cycles_recorded_core_2: 93141
+  memory_access_cycles_recorded_core_0: 105349
+  cycles_recorded_core_2: 2124718
+  cycles_recorded_core_3: 1597492
+  num_expected_insts: 1000000
+  memory_access_cycles_recorded_core_3: 66013
+  Translation:
+    impl: RandomTranslation
+
+
+MemorySystem:
+  impl: GenericDRAM
+  total_num_other_requests: 0
+  total_num_write_requests: 0
+  memory_system_cycles: 200038
+  total_num_read_requests: 16322
+
+  DRAM:
+    impl: DDR5
+    total_rfm_cycles_rank1: 0
+    total_rfm_cycles_rank0: 0
+  AddrMapper:
+    impl: RoBaRaCoCh
+
+
+  Controller:
+    impl: Generic
+    id: Channel 0
+    avg_read_latency_0: 206.695541
+    write_queue_len_avg_0: 0
+    priority_queue_len_0: 6070
+    read_latency_0: 3517338
+    write_queue_len_0: 0
+    read_queue_len_avg_0: 14.3002825
+    read_queue_len_0: 2860600
+    queue_len_0: 2866670
+    read_row_conflicts_core_3: 0
+    read_row_conflicts_core_0: 0
+    read_row_hits_core_7: 115
+    read_row_misses_core_1: 2452
+    read_row_conflicts_core_1: 0
+    write_row_misses_0: 0
+    row_hits_0: 1180
+    read_row_hits_core_4: 159
+    read_row_conflicts_core_2: 0
+    read_row_conflicts_core_7: 0
+    read_row_conflicts_core_4: 0
+    read_row_hits_core_5: 99
+    row_conflicts_0: 0
+    write_row_hits_0: 0
+    read_row_hits_core_3: 145
+    read_row_misses_core_3: 2131
+    read_row_hits_core_0: 153
+    read_row_hits_0: 1180
+    read_row_hits_core_1: 178
+    read_row_misses_0: 15137
+    queue_len_avg_0: 14.3306274
+    write_row_conflicts_0: 0
+    priority_queue_len_avg_0: 0.0303442348
+    read_row_conflicts_0: 0
+    read_row_hits_core_2: 170
+    read_row_misses_core_2: 2181
+    read_row_misses_core_4: 1718
+    num_other_reqs_0: 0
+    read_row_misses_core_5: 1414
+    row_misses_0: 15137
+    read_row_conflicts_core_5: 0
+    num_read_reqs_0: 17017
+    read_row_hits_core_6: 161
+    read_row_misses_core_0: 2530
+    read_row_misses_core_6: 1509
+    read_row_conflicts_core_6: 0
+    read_row_misses_core_7: 1202
+    num_write_reqs_0: 0
+    Scheduler:
+      impl: FRFCFS
+    RefreshManager:
+      impl: AllBank
+
+
+    RowPolicy:
+      impl: ClosedRowPolicy
+      num_close_reqs: 131
+
+
+
