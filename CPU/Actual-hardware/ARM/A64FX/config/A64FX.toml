@@ -1,0 +1,60 @@
+[Platform]
+name = "ARM"
+cpu = "FUJITSU Processor A64FX"
+cpu-freq = 2.2
+motherboard = "Intel xxx"
+l1-cache-size=65536
+l2-cache-size=524288
+l3-cache-size=33554432
+cache-line = 256
+mem-size = 274877906944
+mem = "brandname HBM 8GB"
+mem-type = "HBM2"
+mem-freq = 1000000
+mem-max-channels = 4
+stlb-hit-latency = 17
+
+
+[Experiments]
+stream-core-list = "13-23,25-35,37-47,49-59"
+stream-core-count = 44
+stream-core-count-socket = 11 
+stream-numactl-additional-args = ""
+ptrchase-core = "12"
+ptrchase-numactl-additional-args = ""
+
+rwratio-min = 0
+rwratio-max = 100
+rwratio-step = 2
+
+stream-pauses = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 80, 90, 100, 120, 140, 160, 180, 200, 220, 260, 300, 340, 380, 450, 550, 600, 700, 800, 900, 1000, 1500, 2000, 3000, 5000, 40000, 100000]
+
+
+point-reps = 3
+bw-meas-reps = 1
+lat-meas-reps = 1
+
+time-stream-stabilize= 20
+time-after-bw = 3
+time-after-stream-termination = 0
+
+[Counters]
+bw-tool = "perf"
+bw-tool-path = "perf"
+bw-tool-cores = "12,24,36,48"
+bw-tool-sample-time = "5s"
+bw-tool-counters="r0017,r0325,r0326,r0018"
+
+lat-tool = "perf"
+lat-tool-path = ""
+lat-tool-counters = ""
+
+[Processing]
+smooth-savgol-window-length = 11
+smooth-savgol-polyorder = 3
+
+
+[Benchmarks]
+ptrchase-num-instructions = 200000000
+ptrchase-num-iterations = 50000
+ptrchase-array-size = "1*1024*1024*1024" 
