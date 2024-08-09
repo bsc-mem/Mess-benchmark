@@ -1,0 +1,66 @@
+[Platform]
+name = "MareNostrum 5"
+cpu = "Saphire rapids"
+cpu-freq = 2.1
+motherboard = "Intel xxx"
+cache-line = 128
+mem = "brandname model 8GB"
+mem-type = "DDR5"
+mem-freq = 1593
+mem-max-channels = 4
+stlb-hit-latency = 9
+
+[Experiments]
+stream-core-list = "1-23,25-47"
+stream-core-count = 46
+stream-core-count-socket = 23 
+stream-numactl-additional-args = ""
+ptrchase-core = "0"
+ptrchase-numactl-additional-args = ""
+
+rwratio-min = 0
+rwratio-max = 100
+rwratio-step = 2
+
+stream-pauses = [0, 25, 50, 75, 100, 110, 120, 125, 130, 150, 160, 175, 190, 200, 225, 250, 275, 300, 350, 400, 450, 500, 525, 550, 575, 600, 625, 650, 700, 725, 750, 800, 850, 900, 950, 1000, 1250, 2000, 3500, 5000, 60000, 600000]
+
+
+point-reps = 3
+bw-meas-reps = 1
+lat-meas-reps = 1
+
+time-stream-stabilize= 20
+time-after-bw = 4
+time-after-stream-termination = 0
+
+[Counters]
+bw-tool = "papi"
+bw-tool-path = "/apps/INTEL/2020.0.088/parallel_studio_xe_2020/vtune_profiler_2020/bin64/vtune"
+bw-tool-cores = "0-7"
+bw-tool-sample-time = "5s"
+bw-tool-counters="""\
+INSTR_RETIRED_ANY:FIXC0,\
+CPU_CLK_UNHALTED_CORE:FIXC1,\
+CPU_CLK_UNHALTED_REF:FIXC2,\
+LONGEST_LAT_CACHE_MISS:PMC0,\
+CAS_COUNT_RD:MBOX0C0,\
+CAS_COUNT_WR:MBOX0C1,\
+CAS_COUNT_RD:MBOX1C0,\
+CAS_COUNT_WR:MBOX1C1,\
+CAS_COUNT_RD:MBOX2C0,\
+CAS_COUNT_WR:MBOX2C1,\
+CAS_COUNT_RD:MBOX3C0,\
+CAS_COUNT_WR:MBOX3C1,\
+"""
+lat-tool = "papi"
+lat-tool-path = ""
+lat-tool-counters = ""
+
+[Processing]
+smooth-savgol-window-length = 11
+smooth-savgol-polyorder = 3
+
+
+[Benchmarks]
+ptrchase-num-instructions = 6000000
+ptrchase-array-size = "512*1024*1024" 
