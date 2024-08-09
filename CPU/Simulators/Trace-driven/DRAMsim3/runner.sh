@@ -22,30 +22,13 @@ module load cmake/3.29.2
 
 export LC_ALL="en_US.UTF-8"
 
+# currently it only generate two curves. 100% and 0% read worklaod. change the step to generate more curves. (make sure input tracefiles are available.)
 RWRATIO_MIN=0
 RWRATIO_MAX=100
-RWRATIO_STEP=2
-# PAUSES="0 2 4 5 6 7 9 10 15 20 25 30 35 40 45 65 200"
-# 2000
-# PAUSES="100 120 140 160 200 300 70 80 90 0 1 2 3 4 5 6 7 8 9 10 15 20 25 30 35 40 45 50 55 65"
-
-# rm -r measurment_100_0
-
-# PAUSES="0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 240 260 280 300"
-
-# new
-# PAUSES="2000 1000 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 240 260 280 300 340 380 450 550 600 700 800 900"
+RWRATIO_STEP=100
 
 
-# PAUSES="2000 1000 0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 80 90 100 120 140 160 180 200 220 260 300 340 380 450 550 600 700 800 900"
-# PAUSES="0 5 10 15 20 25 30 35 40 45 50 55 60 65 70 80 90 100 120 140 160 180 200"
 
-# 1500 2000 3000
-# PAUSES="0 3 5 10 15 20 25 30 35 40 45 50 55 60 65 70 80 90 100 120 140 160 180 200 220 260 300 340 380 450 550 600 700 800 900 1000"
-
-# PAUSES="3000 5000 10000 20000"
-
-# 2000
 SMOOTH_SAVGOL_WINDOW_LENGTH=0
 SMOOTH_SAVGOL_POLYORDER=3
 
@@ -55,26 +38,15 @@ SMOOTH_SAVGOL_POLYORDER=3
 # cd ../../
 
 
-exit 0
+# uncomment below line to remove previously simulated points. 
+# rm -r measurment_*
 
-rm -r measurment_*
-
-# Define an array of constant values
+# Define an array of constant values (these are different delays to put in the trace file to configure bandwidth.)
 constant_values=(2 5 10 15 20 22 25 27 30 32 35 37 40 42 45 50 75 200 400 1000)
 
 
 for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRATIO_STEP)); do
-#     for pause in ${PAUSES}; do
 
-
-# 	    # to avoid submitting too much jobs to slurm
-# 	    jobsWAitingInTheQueue=$(squeue | wc -l)
-# 	    while [ $jobsWAitingInTheQueue -gt 300 ]
-# 	    do
-# 	        sleep 200
-# 	        jobsWAitingInTheQueue=$(squeue | wc -l)
-# 	        echo 'waiting for the queues...'
-# 		done
 	
 	for constant_value in "${constant_values[@]}"
 	do
@@ -88,11 +60,6 @@ for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRA
 		mkdir measurment_${rd_percentage}_${constant_value}
 		cd measurment_${rd_percentage}_${constant_value}
 
-
-
-
-
-		# cp ../traceInput/measurment_${rd_percentage}_0/dramsim3.trace ./
 
 		# Set the input and output file names
 		input_file="../traceInput/measurment_${rd_percentage}_0/dramsim3.trace"
@@ -110,23 +77,12 @@ for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRA
 		cp ../submit.batch ./
 		sbatch submit.batch
 
-		# cp ../sb.cfg ./
-
-		# sed -i "s/rd_percentage/${rd_percentage}/g" sb.cfg 
-		# sed -i "s/pause/${pause}/g" sb.cfg 
-
-		# # cp ../src/ptr_chase/ptr_chase ./
-		# # cp ../src/ptr_chase/array.dat ./
-
-		# cp ../submit.batch ./
-
-		# sbatch submit.batch
+	
 
 		cd ../
 
 	done 
 
-    # done
 
 
 

@@ -33,6 +33,15 @@ DRAMsim3
 	3. submit.bash: SLRUM submis file to run the simulation on a node in MareNostrum 5  
 
 
+## how to simulate Mess benchmark with dramsim3 
+
+1. unzip the trace files inside traceInput folder. These trace files has been truncated. also currently only trace files for 100% and 0% read workload is available. This is due to capacity issue of git repositories. 
+
+2. modify the submit.batch file to point to dramsim3 binary and correct config file. The dramsim3 version and config gile used in this study is added to the DRAMsim3 folder. 
+
+
+
+
 
 ## Generate traces
 
