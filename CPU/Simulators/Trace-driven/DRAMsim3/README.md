@@ -14,6 +14,7 @@ DRAMsim3
 │   ├── output_jobID.err 
 │   ├── output_jobID.out 
 │   └── submit.batch
+├── DRAMsim3_mn5
 ├── traceInput
 ├── main.py
 ├── result.csv 
@@ -21,26 +22,35 @@ DRAMsim3
 └── submit.batch 
 ```
 
+
 - traceInput: This folder contains zip files related to input traces for running trace-based simulation. 
 - main.py: python file to parse the simulation outputs inside measurements_** folders and generate result.csv output file. 
 - result.csv: This file contails information for generating bandwidth--latency curves. 
  - runner.sh: The main script that run the workflow. It execute the full workflow from reading the config file to generating final simulaiton results. 
 - submit.batch: this is SLRUM job description. This is the template that will be copied to measurement_** folder by runner.sh to submit the simulation.
-
+- DRAMsim3_mn5: this folder contain the dramsim3 version that we used as well as the config files necessary to replicate Mess paper results. 
 - measurement_rdRatio_Pause: it contains final simulation reuslts for a single point in bandwidth--latency curves.
 	1. dramsim3.json,dramsim3.txt,dramsim3epoch: dramsim3 simulation outputs. 
 	2. output_jobID.err/out: SLRUM error and output file. These files are used for debugging purposes. 
 	3. submit.bash: SLRUM submis file to run the simulation on a node in MareNostrum 5  
 
 
-## how to simulate Mess benchmark with dramsim3 
+## How to simulate Mess benchmark with dramsim3 
 
 1. unzip the trace files inside traceInput folder. These trace files has been truncated. also currently only trace files for 100% and 0% read workload is available. This is due to capacity issue of git repositories. 
 
-2. modify the submit.batch file to point to dramsim3 binary and correct config file. The dramsim3 version and config gile used in this study is added to the DRAMsim3 folder. 
+2. Go to folder DRAMsim3_mn5 and compile dramsim3 following "README.md" file existed in the folder. 
 
 
+3. modify the submit.batch file to point to compiled dramsim3 binary and correct config file inside dramsim3 folder. 
 
+4. then run the runner.sh as: 
+
+```
+./runner.sh
+```
+
+Note: These simulations are run on supercomputers to exploit parallelism avaialble on thoese machine. please change runner.sh file if you use a single machine. or if you do not use SLRUM. In that case in the runner.sh file, change "sbatch" commands with "sh".
 
 
 ## Generate traces
