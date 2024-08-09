@@ -1,6 +1,6 @@
-#Obtaining bandwidth-latency curves with MeStress
+# Obtaining bandwidth--latency curves with Mess
 
-The end result of MeStress tool is a family of bandwidth-latency curves for a given memory system. A single curve corresponds to a given read-write ratio of memory traffic and shows the dependency of memory access latency from the current memory bandwidth.
+The end result of Mess tool is a family of bandwidth-latency curves for a given memory system. A single curve corresponds to a given read-write ratio of memory traffic and shows the dependency of memory access latency from the current memory bandwidth.
 
 The overal process of obtaining these curves is straight-forward. This page describes the process of gathering the raw performance measurements used to generate the curves.
 

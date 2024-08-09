@@ -1,10 +1,10 @@
-## Memory access latency benchmark
+## Memory access latency benchmark (pointer-chase)
 
 The benchmark is used to measure access latency of different levels of memory hierarchy, for a randomized memory access pattern (so the effect of the prefetcher is negligible).
 The load file size determines at which level of memory hierarchy the load file resides and which memory hierarchy level is tested.
 
 The benchmark is implemented as a pointer-chasing code with load instructions in x86 assembly.
-Execution time or number of CPU cycles of the benchmark execution can be measured using tools such as **perf**, **LIKWID**, etc. In our experiments, we also measured page walks and secondary DTLB penalties, so we can subtract them from the total CPU cycles count and get more precise results. Finally, we divide this result with the number of load instructions and, thus, get per-load access latency of a certain memory hierarchy level.
+Execution time or number of CPU cycles of the benchmark execution can be measured using tools such as **perf**, **LIKWID**, etc. In our experiments, we also measured page walks and secondary DTLB penalties, so we can subtract them from the total CPU cycles count and get more precise results. Finally, we divide this result with the number of load instructions and, thus, get per-load average access latency of a certain memory hierarchy level.
 
 ### Compiling and running the benchmark
 
@@ -32,10 +32,10 @@ Random walk file generated.
 
 ### Example of the benchmark execution and measurement with perf
 
-For example, on Sandy Bridge E5-2670 platform, we used the benchmark as follows:
+For example, we used the benchmark as follows:
 ```
-numactl -C 0 -m 0 perf stat -e cycles:u,instructions:u,r1008:u,r0408:u ./ptr_chase
+time numactl -C 0 -m 0 perf stat -e cycles:u,instructions:u,r1008:u,r2008:u ./ptr_chase
 ```
 This way, we execute the benchmark on CPU core0 and measure cycles, instructions, hits in the secondary DTLB and page walks.
-From the total number of cycles we subtract page walks and secondary DTLB penalties (7 cycles on our platform), divide this result with number of instructions (5M),
+From the total number of cycles we subtract page walks and secondary DTLB penalties, 9 cycles on our platform (measured using TLB kernel of LMBench benchmark), divide this result with number of instructions (5M),
 and this way we get only the latency of the random memory read access, without the cycles needed for address translation.
