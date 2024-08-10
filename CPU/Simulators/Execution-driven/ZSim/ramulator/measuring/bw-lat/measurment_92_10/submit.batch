@@ -1,0 +1,37 @@
+#!/bin/bash
+#SBATCH --job-name="zsim-bw-lat-curve-validation"
+#SBATCH -D .
+#SBATCH --output=zsim_output_%j.out
+#SBATCH --error=zsim_output_%j.err 
+#SBATCH --nodes=1
+#SBATCH --time=47:00:00
+#SBATCH --exclusive
+
+module purge
+
+module load intel
+module load HDF5 PYTHON/2.7.3  SCONS/2.5.1
+module load gcc/7.2.0 #gcc/4.7.0 #gcc/4.9.1 #gcc/5.1.0 #gcc/7.2.0 
+module load libelf
+module load CMAKE/3.7.2 # for nord 2
+module load bullxmpi/bullxmpi-1.2.9.1
+
+
+#export LC_ALL="en_US.UTF-8"
+
+export LIBCONFIG_HOME=/home/bsc18/bsc18278/zsim/sim-env/libconfig-1.5/
+export PINPATH=/home/bsc18/bsc18278/zsim/sim-env/pin/
+export HDF5_HOME=/home/bsc18/bsc18278/zsim/sim-env/hdf5-1.8.16/
+#export DRAMSIMPATH=/home/bsc18/bsc18278/zsim/DRAMSim2DQ
+export DRAMSIM3PATH=/home/bsc18/bsc18278/zsimdramsim3/acmSimulation/DRAMsim3_mt/
+
+export LD_LIBRARY_PATH=$LIBCONFIG_HOME/lib:$HDF5_HOME/lib:$LD_LIBRARY_PATH
+
+
+export OMP_NUM_THREADS=24
+
+/home/bsc18/bsc18278/zsimdramsim3/acmSimulation/zsim.git_mt_bw_lat/build/debug/zsim sb.cfg
+
+
+
+
