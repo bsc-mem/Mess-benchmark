@@ -1,0 +1,30 @@
+remove gcc/7.2.0 (PATH, MANPATH, LD_LIBRARY_PATH)
+load hdf5/1.8.8 (PATH, LD_LIBRARY_PATH)
+load python/2.7.3 (PATH, MANPATH, LD_LIBRARY_PATH, C_INCLUDE_PATH)
+load SCONS/2.5.1 (PATH)
+load gcc/7.2.0 (PATH, MANPATH, LD_LIBRARY_PATH)
+load libelf/2009 (LD_LIBRARY_PATH,LIBRARY_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, CXX_INCLUDE_PATH)
+load cmake/3.7.2 (PATH)
+max system bytes = 4294966271
+system bytes     = 4294966271
+in use bytes     =   65025912
+[S 0] [0] Internal exception detected:
+[S 0] [0]  Code: 1
+[S 0] [0]  Address: 0x2aaaaadb9194
+[S 0] [0]  Description: Exception Code: ACCESS_INVALID_ADDRESS. Exception Address = 0x2aaaaadb9194. Access Type: UNKNOWN. Access Address = 0x000000018
+[S 0] [0]  Caused by invalid access to address 0x18
+[S 0] [0] Backtrace (13/40 max frames)
+[S 0] [0]  /home/bsc18/bsc18278/zsimdramsim3/acmSimulation/zsim.git_mt/build/debug/zsim.cpp:1438 / InternalExceptionHandler(unsigned int, LEVEL_BASE::EXCEPTION_INFO*, LEVEL_VM::PHYSICAL_CONTEXT*, void*)
+[S 0] [0]  regstrlcpy.c:0 / LEVEL_PINCLIENT::IEH_CALLBACKS::NotifyInternalException(unsigned int, LEVEL_BASE::EXCEPTION_INFO*, LEVEL_VM::CONTEXT*)
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM12SIGNALS_IMPL19InternalHandlerSyncEiPN7BARECRT8SIGXINFOEPN5PINVM11ISIGCONTEXTEPPKNS_14SCT_ATTRIBUTESEPNS_5PCTXTEPj+0x444) [0x3043a9454]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM12SIGNALS_IMPL20HandlePhysicalSignalEPN7BARECRT8SIGXINFOEPN5PINVM11ISIGCONTEXTE+0x124) [0x3043aa1f4]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN5PINVM28SIGNAL_DETAILS_LINUX_INTEL6415InternalHandlerEiPN7BARECRT8SIGXINFOEPv+0xe8) [0x304438c88]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(BARECRT_SigReturnRt+0) [0x30446603c]
+[S 0] [0]  /apps/GCC/7.2.0/lib64/libstdc++.so.6(_ZSt18_Rb_tree_incrementPSt18_Rb_tree_node_base+0x24) [0x2aaaaadb9194]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM6CC_DIR20LookupCCEntryByIaddrEN10LEVEL_CORE4ADDRILi1EEEPKNS_14SCT_ATTRIBUTESEbb+0x188) [0x3042610d8]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM3JIT15CompileInternalEN10LEVEL_CORE4ADDRILi1EEEPKNS_14SCT_ATTRIBUTESEPN10LEVEL_BASE14EXCEPTION_INFOEj+0x6b) [0x30428275b]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM3JIT7CompileEN10LEVEL_CORE4ADDRILi1EEEPKNS_14SCT_ATTRIBUTESEPN10LEVEL_BASE14EXCEPTION_INFOE+0x9b) [0x304283bbb]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM18IBRANCH_DISPATCHER18HandleIndirectXferEPKNS_14SCT_ATTRIBUTESEPNS_5PCTXTEPKNS_18XFER_INDIRECT_ARGSE+0x203) [0x304310283]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(_ZN8LEVEL_VM2VM8DispatchEPKNS_10VMSVC_ARGSEPNS_5PCTXTE+0xb98) [0x3042f95f8]
+[S 0] [0]  /home/bsc18/bsc18278/zsim/sim-env/pin/intel64/bin/pinbin(VmLeave+0) [0x304380868]
+[H] Panic on build/debug/zsim_harness.cpp:127: Child 28642 (idx 0) exit was anomalous, killing simulation
