@@ -6,7 +6,17 @@ Mess benchmark describes the memory system performance with a family of bandwidt
 
 Please cite the following paper if you find this benchmark useful:
 
-P. Esmaili-Dokht, F. Sgherzi, V. S. Girelli, I. Boixaderas, M. Carmin, A. Momeni, A. Armejach, E. Mercadal, G. Llort, P. Radojkovic, M. Moreto, J. Gimenez, X. Martorell, E. Ayguade, J. Labarta, E. Confalonieri, R. Dubey, and J. Adlard, “A mess of memory system benchmarking, simulation and application profiling,” 2024. [Online]. Available: https://arxiv.org/abs/2405.10170
+```
+@misc{esmailidokht2024messmemorybenchmarkingsimulation,
+      title={A Mess of Memory System Benchmarking, Simulation and Application Profiling}, 
+      author={Pouya Esmaili-Dokht and Francesco Sgherzi and Valeria Soldera Girelli and Isaac Boixaderas and Mariana Carmin and Alireza Monemi and Adria Armejach and Estanislao Mercadal and German Llort and Petar Radojkovic and Miquel Moreto and Judit Gimenez and Xavier Martorell and Eduard Ayguade and Jesus Labarta and Emanuele Confalonieri and Rishabh Dubey and Jason Adlard},
+      year={2024},
+      eprint={2405.10170},
+      archivePrefix={arXiv},
+      primaryClass={cs.AR},
+      url={https://arxiv.org/abs/2405.10170}, 
+}
+```
 
 ---To be appear in MICRO 2024
 
@@ -36,8 +46,9 @@ Mess-benchmark
         └── Ramulator 
 ```
 
+Each directory has similar structure with minor differences. For more information read the `README.md` file in each directory.
+Below, we show the structure and the main files for Mess benchmark in x86 CPU directory as an example. 
 
-Below we show the structure and the main files for Mess benchmark in x86 CPU directory. We picked x86 CPU as an example and other platforms follow similar structure. 
 
 ```
 x86
@@ -57,19 +68,19 @@ x86
 
  - mn4_DDR4_2666.toml: exists in the config folder, which describes the system under the study and all the experimental setups. 
 
- - measuring/bw: the folder contains all the raw bandwidith measurements for each individial experimental points (i.e., each point on bandwidth--latency curves).
+ - measuring/bw: the folder contains all the raw bandwidth measurements for each individual experimental points (i.e., each point on bandwidth--latency curves).
 
- - measuring/lat: the folder contains all the raw latency measurements for each individial experimental points (i.e., each point on bandwidth--latency curves).
+ - measuring/lat: the folder contains all the raw latency measurements for each individual experimental points (i.e., each point on bandwidth--latency curves).
 
- - measuring/log: the folder contains all the logs for each individial experimental points (i.e., each point on bandwidth--latency curves).
+ - measuring/log: the folder contains all the logs for each individual experimental points (i.e., each point on bandwidth--latency curves).
 
  - measuring/output: This folder contains the final bandwidth--latency curves and the .csv files that contains detailed information for each bandwidth--latency point on the curves. 
 
- - processing: This folder contains all the python codes to parse raw measurements and generate final bandwidth--latency curves and .csv file. 
+ - processing: This folder contains all the python codes to parse raw measurements and generate final bandwidth--latency curves and final .csv file. 
 
  - src: This folder contains pointer-chase and workload generator benchmark. 
 
- - runner.sh: The main script that run the workflow. It execute the full workflow from reading the config file to generating final bandwidth--latency curves. 
+ - runner.sh: The main script that run the workflow. It executes the full workflow from reading the config file to generating final bandwidth--latency curves. 
 
  - submit_main.job: This is the script that is used by "runner.sh" and measures one experimental data point (one point on bandwidth--latency curves). 
 
