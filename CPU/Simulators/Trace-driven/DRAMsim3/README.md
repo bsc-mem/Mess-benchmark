@@ -7,50 +7,83 @@ Below we show the structure of this directory and how to simulate and generate b
 
 ```
 DRAMsim3
-├── measurement_rdRatio_Pause
-│   ├── dramsim3.json
+├── measurement_rdRatio_Pause 
+│   ├── dramsim3.json 
 │   ├── dramsim3.txt 
 │   ├── dramsim3epoch.json 
 │   ├── output_jobID.err 
 │   ├── output_jobID.out 
-│   └── submit.batch
-├── DRAMsim3_mn5
-├── traceInput
-├── main.py
-├── result.csv 
+│   └── submit.batch 
+├── DRAMsim3_mn5 
+├── traceInput 
+├── main.py 
+├── results.csv 
+├── results_original.csv 
 ├── runner.sh 
-└── submit.batch 
+├── submit.batch
+├── replicate.sh
+├── convert.py 
+└── output.pdf 
+
 ```
 
 
-- traceInput: This folder contains zip files related to input traces for running trace-based simulation. 
-- main.py: python file to parse the simulation outputs inside measurements_** folders and generate result.csv output file. 
-- result.csv: This file contails information for generating bandwidth--latency curves. 
- - runner.sh: The main script that run the workflow. It execute the full workflow from reading the config file to generating final simulaiton results. 
-- submit.batch: this is SLRUM job description. This is the template that will be copied to measurement_** folder by runner.sh to submit the simulation.
-- DRAMsim3_mn5: this folder contain the dramsim3 version that we used as well as the config files necessary to replicate Mess paper results. 
+- `traceInput`: This folder contains zip files related to input traces for running trace-based simulation. 
+- `main.py`: python file to parse the simulation outputs inside measurements_** folders and generate result.csv output file. 
+- `result.csv`: This output file contails information for generating bandwidth--latency curves. 
+- `result_original.csv`: This output file contails original information presented in the paper for generating bandwidth--latency curves. 
+ - `runner.sh`: The main script that run the workflow. It execute the full workflow from reading the config file to generating final simulaiton results. 
+- `submit.batch`: this is SLRUM job description. This is the template that will be copied to measurement_** folder by runner.sh to submit the simulation.
+- `DRAMsim3_mn5`: this folder contain the dramsim3 version that we used as well as the config files necessary to replicate Mess paper results. 
 - measurement_rdRatio_Pause: it contains final simulation reuslts for a single point in bandwidth--latency curves.
-	1. dramsim3.json,dramsim3.txt,dramsim3epoch: dramsim3 simulation outputs. 
-	2. output_jobID.err/out: SLRUM error and output file. These files are used for debugging purposes. 
-	3. submit.bash: SLRUM submis file to run the simulation on a node in MareNostrum 5  
+	1. `dramsim3.json`,`dramsim3.txt`,`dramsim3epoch`: dramsim3 simulation outputs. 
+	2. `output_jobID.err/out`: SLRUM error and output file. These files are used for debugging purposes. 
+	3. `submit.bash`: SLRUM submis file to run the simulation on a node in MareNostrum 5  
+
+- `replicate.sh` Main file to replicate figure 6.b of the main manuscript (Mess paper). 
+- `convert.py` it convert final .csv file to bandwidth--latency curves. 
 
 
 ## How to simulate Mess benchmark with dramsim3 
 
+`replicate.sh` file provides an example how to generate bandwidth--latency curves for DRAMsim3. This process is done in the following steps:
+
 1. unzip the trace files inside traceInput folder. These trace files has been truncated. also currently only trace files for 100% and 0% read workload is available. This is due to capacity issue of git repositories. 
+```
+cd traceInput
+for file in *.zip; do
+unzip ”$file”
+done cd ..
+```
 
 2. Go to folder DRAMsim3_mn5 and compile dramsim3 following "README.md" file existed in the folder. 
-
-
-3. modify the submit.batch file to point to compiled dramsim3 binary and correct config file inside dramsim3 folder. 
-
-4. then run the runner.sh as: 
+```
+cd DRAMsim3_mn5 
+make
+cd ..
+```
+3. run the workflow `runner.sh`: 
 
 ```
 ./runner.sh
 ```
 
+4. post process to generate final .csv file and curves:
+
+```
+# generate results.csv file
+python3 main.py .
+
+# generate output.pdf (bandwidth−−latency curves)
+python3 convert . py
+```
+
 Note: These simulations are run on supercomputers to exploit parallelism avaialble on thoese machine. please change runner.sh file if you use a single machine. or if you do not use SLRUM. In that case in the runner.sh file, change "sbatch" commands with "sh".
+
+
+## Validate Figure 6.b of the Mess paper
+
+The easiest way to validate the result is visually by examining the generated curves (e.g., `output.pdf` in our example). However, if one wants to evaluate the results in more detail, the `results.csv` file can be compared to `results_original.csv`; rows with the same rw_ratio and pause values should have a very close latency and bandwidth.
 
 
 ## Generate traces
