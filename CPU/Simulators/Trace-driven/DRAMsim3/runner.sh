@@ -10,15 +10,19 @@
 #SBATCH --cpus-per-task=1      
 #SBATCH --time=00:20:00
 
-module purge
-module load bsc/1.0
-module load intel/2023.2.0
-module load impi/2021.9.0
-module load oneapi/2023.2.0
-module load mkl/2023.2.0
 
-module load hdf5 python/3.12.1 
-module load cmake/3.29.2
+# below code block is for the MareNostrum 5 in Barcelona Supercomputer Center (BSC). It will load all the necessary modules to run the experiment.
+# if you use other servers please make sure the system has gcc and g++ installed. 
+# if you use other servers please make sure the system has python3 with matplotlib and toml paclage installed.
+# module purge
+# module load bsc/1.0
+# module load intel/2023.2.0
+# module load impi/2021.9.0
+# module load oneapi/2023.2.0
+# module load mkl/2023.2.0
+
+# module load hdf5 python/3.12.1 
+# module load cmake/3.29.2
 
 
 
@@ -38,7 +42,7 @@ SMOOTH_SAVGOL_POLYORDER=3
 
 
 # uncomment below line to remove previously simulated points. 
-# rm -r measurment_*
+rm -r measurment_*
 
 # Define an array of constant values (these are different delays to put in the trace file to configure bandwidth.)
 constant_values=(2 5 10 15 20 22 25 27 30 32 35 37 40 42 45 50 75 200 400 1000)

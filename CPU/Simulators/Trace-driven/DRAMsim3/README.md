@@ -2,6 +2,11 @@
 
 Below we show the structure of this directory and how to simulate and generate bandwidth--latency curves for DARMsim3. 
 
+## System Prerequisites
+
+- Any Linux OS (tested on `Red Hat Enterprise Linux 9.2`).
+- Any `gcc` and `g++` compilers (tested on `11.3.1` version).
+- Any `Python 3` with following packages: `matplotlib`, `toml`, `Pyarrow`, and `seaborn` (tested on `3.12.1` version).  
 
 ## Directory structure 
 
