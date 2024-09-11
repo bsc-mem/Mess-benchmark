@@ -9,10 +9,11 @@ cd ..
 
 # compile DRAMsim3
 cd DRAMsim3_mn5
-make
-cd ..
-
-chmod +x ./DRAMsim3_mn5/build/dramsim3main
+mkdir build
+cd build
+cmake ..
+make 
+cd ../..
 
 ################################################## 
 # run the experiment (supercomputer)
@@ -20,11 +21,11 @@ chmod +x ./DRAMsim3_mn5/build/dramsim3main
 #sbatch runner.sh
 
 # wait until all jobs are done
-while [ $(squeue | wc -l) -gt 1 ]
-do
-    sleep 300
-    echo 'waiting for the queues...'
-done
+# while [ $(squeue | wc -l) -gt 1 ]
+# do
+#     sleep 300
+#     echo 'waiting for the queues...'
+# done
 
 ##################################################
 # run the experiment (single server)
@@ -37,9 +38,8 @@ done
 ###################
 # Post-processing #
 ###################
+
 # echo "start processing data..."
 
 python3 main.py .
-
-
-
+python3 convert.py
