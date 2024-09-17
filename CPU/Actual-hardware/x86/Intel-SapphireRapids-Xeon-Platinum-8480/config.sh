@@ -1,6 +1,6 @@
 NAME=mn5
 CPU="Intel Xeon Platinum 8480+ (Sapphire Rapids)"
-CPU_FREQ=2.1
+CPU_FREQ=2
 MEM_TYPE="DDR5"
 OPTANE=
 OPTANE_FREQ=

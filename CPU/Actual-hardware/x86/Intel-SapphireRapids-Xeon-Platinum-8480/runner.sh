@@ -200,48 +200,49 @@ cd ${ROOT_DIR}
 #############
 # Main loop #
 #############
-# for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRATIO_STEP)); do
-#     for pause in ${PAUSES}; do
-#         for ((point_rep=1; point_rep<=${POINT_REPS}; point_rep+=1)); do
-#             print_iteration
+for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRATIO_STEP)); do
+    for pause in ${PAUSES}; do
+        for ((point_rep=1; point_rep<=${POINT_REPS}; point_rep+=1)); do
+            print_iteration
 
-#             # check that system load is low
-#             check_cpu_load
+            # check that system load is low
+            check_cpu_load
 
-#             # mess with everything left on any cache level so far
-#             # to make sure there is nothing left from previous executions
-#             #stress-ng --brk 2 --stack 2 --bigheap 2 -t 10
+            # mess with everything left on any cache level so far
+            # to make sure there is nothing left from previous executions
+            #stress-ng --brk 2 --stack 2 --bigheap 2 -t 10
 
-#             launch_stream
+            launch_stream
 
-#             # Wait for bandwidth to stabilize
-#             sleep ${TIME_STREAM_STABILIZE}
+            # Wait for bandwidth to stabilize
+            sleep ${TIME_STREAM_STABILIZE}
 
-#             # Measure performance counters needed to calculate memory bandwidth
-#             # Repeat measurements configured number of times
-#             for ((bw_meas_rep=1; bw_meas_rep<=${BW_MEAS_REPS}; bw_meas_rep+=1)); do
-#                 measure_bandwidth
-#             done
-#             sleep ${TIME_AFTER_BW_MEAS}
+            # Measure performance counters needed to calculate memory bandwidth
+            # Repeat measurements configured number of times
+            for ((bw_meas_rep=1; bw_meas_rep<=${BW_MEAS_REPS}; bw_meas_rep+=1)); do
+                measure_bandwidth
+            done
+            sleep ${TIME_AFTER_BW_MEAS}
 
-#             # Measure performance counters needed to calculate memory access latency
-#             # Repeat measurements configured number of times
-#             cd ${PTRCHASE_DIR}
-#             for ((lat_meas_rep=1; lat_meas_rep<=${LAT_MEAS_REPS}; lat_meas_rep+=1)); do
-#                 measure_latency
-#             done
-#             cd ${ROOT_DIR}
+            # Measure performance counters needed to calculate memory access latency
+            # Repeat measurements configured number of times
+            cd ${PTRCHASE_DIR}
+            for ((lat_meas_rep=1; lat_meas_rep<=${LAT_MEAS_REPS}; lat_meas_rep+=1)); do
+                measure_latency
+            done
+            cd ${ROOT_DIR}
 
-#             # Terminate stream execution
-#             terminate_stream
-#             sleep ${TIME_AFTER_STREAM_TERMINATION}
+            # Terminate stream execution
+            terminate_stream
+            sleep ${TIME_AFTER_STREAM_TERMINATION}
 
-#             echo "*********** Done executing iteration."
+            echo "*********** Done executing iteration."
 
-#         done
+        done
 
-#     done
-# done
+    done
+done
+
 
 ###################
 # Post-processing #
@@ -249,5 +250,4 @@ cd ${ROOT_DIR}
 PROCESSING_DIR="${ROOT_DIR}/processing"
 ${PROCESSING_DIR}/main.py ${OUTPUT_DIR}
 
-# TODO something is not being killed when this process finishes, search for kill
-# any process started inside bash script
+
