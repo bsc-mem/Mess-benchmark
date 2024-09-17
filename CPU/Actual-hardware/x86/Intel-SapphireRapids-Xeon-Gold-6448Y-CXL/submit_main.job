@@ -1,0 +1,162 @@
+#!/bin/bash
+
+#############
+# Functions #
+#############
+
+# Prints the current iteration for progress tracking
+print_iteration() {
+    echo "*********** Iteration: rd_percentage=${rd_percentage} pause=${pause} point_rep=${point_rep}"
+}
+
+# Launches stream benchmark with desired read-percentage and pause
+launch_stream() {
+    echo "Launching stream..."
+    # Launch stream and redirect stdout and stderr to a log file
+    export STREAM_LOG_FILE=${OUTPUT_DIR_LOG}/stream_${rd_percentage}_${pause}.log
+
+    for VARIABLE in ${STREAM_CORE_LIST}
+    do
+        echo ${VARIABLE}
+
+        if [ $VARIABLE -le 32 ]
+        then
+            # if local CPU, generate the workload
+            numactl -C ${VARIABLE} --interleave ${MEM_BIND_NUMA} ${STREAM_DIR}/stream_mpi.x -r ${rd_percentage} -p ${pause} >>${STREAM_LOG_FILE} 2>&1 & 
+        elif [ $VARIABLE -le 64 ]
+            then
+            # if it is remote cpu, just do not sleep
+            numactl -C ${VARIABLE} --interleave 1 ${STREAM_DIR}/stream_mpi.x -r ${rd_percentage} -p 10000000 >>${STREAM_LOG_FILE} 2>&1 & 
+        else
+            echo "We, intentionally, do not add any process to the second thread of each core"
+            # numactl -C ${VARIABLE} --interleave ${MEM_BIND_NUMA} ${STREAM_DIR}/stream_mpi.x -r ${rd_percentage} -p ${pause} >>${STREAM_LOG_FILE} 2>&1 & 
+        fi
+
+    done
+
+    # numactl -C${STREAM_CORE_LIST} --membind ${MEM_BIND_NUMA} mpirun -n ${STREAM_CORE_COUNT} ${STREAM_DIR}/stream_mpi.x -r ${rd_percentage} -p ${pause} >>${STREAM_LOG_FILE} 2>&1 & 
+
+    # Save the PID for later termination
+    export STREAM_PID=$!
+    echo "  Stream launched."
+}
+
+# INSTR_RETIRED_ANY:FIXC0,CPU_CLK_UNHALTED_CORE:FIXC1,CPU_CLK_UNHALTED_REF:FIXC2,LONGEST_LAT_CACHE_MISS:PMC0,CAS_COUNT_RD:MBOX0C0,CAS_COUNT_WR:MBOX0C1,CAS_COUNT_RD:MBOX1C0,CAS_COUNT_WR:MBOX1C1,CAS_COUNT_RD:MBOX2C0,CAS_COUNT_WR:MBOX2C1,CAS_COUNT_RD:MBOX3C0,CAS_COUNT_WR:MBOX3C1,CAS_COUNT_RD:MBOX4C0,CAS_COUNT_WR:MBOX4C1,CAS_COUNT_RD:MBOX5C0,CAS_COUNT_WR:MBOX5C1,CAS_COUNT_RD:MBOX6C0,CAS_COUNT_WR:MBOX6C1,CAS_COUNT_RD:MBOX7C0,CAS_COUNT_WR:MBOX7C1,CAS_COUNT_RD:MBOX8C0,CAS_COUNT_WR:MBOX8C1,CAS_COUNT_RD:MBOX9C0,CAS_COUNT_WR:MBOX9C1,CAS_COUNT_RD:MBOX10C0,CAS_COUNT_WR:MBOX10C1,CAS_COUNT_RD:MBOX11C0,CAS_COUNT_WR:MBOX11C1,CAS_COUNT_RD:MBOX12C0,CAS_COUNT_WR:MBOX12C1,CAS_COUNT_RD:MBOX13C0,CAS_COUNT_WR:MBOX13C1,CAS_COUNT_RD:MBOX14C0,CAS_COUNT_WR:MBOX14C1,CAS_COUNT_RD:MBOX15C0,CAS_COUNT_WR:MBOX15C1
+
+# Use selected tool to sample uncore counters (memory controller) and store them in a file
+# These measurements are used in post-processing to calculate memory bandwidth
+measure_bandwidth() {
+    echo "Measuring bandwidth..."
+    BW_TOOL_OUTPUT_FILE=${OUTPUT_DIR_BW}/bw_${BW_TOOL}_${rd_percentage}_${pause}.txt
+    
+    case ${BW_TOOL} in
+        "perf")
+            # this is correct one for perf commands
+            # { numactl -C 0 perf stat -a -e unc_m_cas_count.rd,unc_m_cas_count.wr,unc_m_cas_count.all sleep ${BW_TOOL_SAMPLE_TIME}; }  >>${BW_TOOL_OUTPUT_FILE} 2>&1
+          
+            # measure CXL bandwidth with Intel PCM
+            # make sure you point to correct path for pcm-memory
+            timeout 9s numactl -C 0 /pathToPCM/pcm-memory 5  >>${BW_TOOL_OUTPUT_FILE} 2>&1
+
+
+            ;;
+        "likwid")
+            { ${BW_TOOL_PATH} -f -c ${BW_TOOL_CORES} -O -g ${BW_TOOL_COUNTERS} -S ${BW_TOOL_SAMPLE_TIME} ; } >>${BW_TOOL_OUTPUT_FILE} 2>&1
+            ;;
+        "vtune")
+            # TODO: Make the following command fully configurable
+            # TODO: Does Vtune support sampling mode similar to stetoscope mode in likwid? (this avoids using sleep)
+            # { ${BW_TOOL_PATH} -collect-with runsa -quiet -knob event-config=UNC_M_CAS_COUNT.ALL -- numactl -C 0 sleep ${BW_TOOL_SAMPLE_TIME} ; } >>${BW_TOOL_OUTPUT_FILE} 2>&1
+            # { ${BW_TOOL_PATH} -collect-with runsa -quiet -knob event-config=UNC_CXLCM_CLOCKTICKS -- numactl -C 0 sleep ${BW_TOOL_SAMPLE_TIME} ; } >>${BW_TOOL_OUTPUT_FILE} 2>&1
+            ;;
+        "CUSTOM")
+            { ${BW_TOOL_CUSTOM_CMD} ; } >>${BW_TOOL_OUTPUT_FILE} 2>&1
+            ;;
+        *)
+            echo "  ERROR: ${BW_TOOL} not supported as a bandwidth measurement tool."
+    esac
+    echo "  Bandwidth measured."
+}
+
+# Use selected tool to measure performance of pointer chasing benchmark and store them in a file
+# These measurements are used in post-processing to calculate memory access latency
+measure_latency() {
+    echo "Measuring latency..."
+    LAT_TOOL_OUTPUT_FILE=${OUTPUT_DIR_LAT}/lat_${LAT_TOOL}_${rd_percentage}_${pause}.txt
+    case ${LAT_TOOL} in
+        "perf")
+            # numactl -C${PTRCHASE_CORE} ${PTRCHASE_NUMACTL_ADDITIONAL_ARGS} ${LAT_TOOL_PATH} stat -e cycles:u ./ptr_chase >> ${LAT_TOOL_OUTPUT_FILE} 2>&1
+            numactl -C${PTRCHASE_CORE} --interleave ${MEM_BIND_NUMA} ${PTRCHASE_NUMACTL_ADDITIONAL_ARGS} ./ptr_chase >> ${LAT_TOOL_OUTPUT_FILE} 2>&1
+            ;;
+        "CUSTOM")
+            { ${LAT_TOOL_CUSTOM_CMD} ; } >>${LAT_TOOL_OUTPUT_FILE} 2>&1
+            ;;
+        *)
+            echo "  ERROR: ${LAT_TOOL} not supported as a latency measurement tool."
+    esac
+    echo "  Latency measured."
+}
+
+# Terminates stream
+# Checks if correct stream configuration is running
+terminate_stream() {
+    #First check if correct stream process is still executing
+    stream_cmd=$(ps -p ${STREAM_PID} -o command)
+    if [[ "${stream_cmd}" == *"-r ${rd_percentage} -p ${pause}"* ]]; then
+        #OK: stream with correct parameters is still running. We can terminate it
+        echo "  Terminating stream."
+        kill -SIGKILL ${STREAM_PID}
+        wait ${STREAM_PID} 2>>${STREAM_LOG_FILE}
+    else
+        # TODO: what if there is a running instance of stream from a previous iteration?
+        echo "  WARNING: Stream execution finished prematurelly for rd_percentage=${rd_percentage} pause=${pause}."
+        echo "  WARNING: The measurements might be inprecisse."
+    fi
+}
+
+# Checks if cpu load is low
+# The purpose is to identify situations where another "heavy" process may run in parallel with this tool.
+# Such situations may result in inprecisse measurements.
+check_cpu_load() {
+    # Taken from https://stackoverflow.com/questions/9229333/how-to-get-overall-cpu-usage-e-g-57-on-linux#comment33209786_9229692
+    CPU_USAGE=$(top -b -n2 -p 1 | fgrep "Cpu(s)" | tail -1 | awk -F'id,' -v prefix="$prefix" '{ split($1, vs, ","); v=vs[length(vs)]; sub("%", "", v); printf "%s%.1f%%\n", prefix, 100 - v }')
+    echo "Current CPU usage: ${CPU_USAGE}"
+}
+
+
+
+
+print_iteration
+
+# check that system load is low
+check_cpu_load
+
+launch_stream
+
+# Wait for bandwidth to stabilize
+sleep ${TIME_STREAM_STABILIZE}
+
+# Measure performance counters needed to calculate memory bandwidth
+# Repeat measurements configured number of times
+for ((bw_meas_rep=1; bw_meas_rep<=${BW_MEAS_REPS}; bw_meas_rep+=1)); do
+    measure_bandwidth
+done
+
+sleep ${TIME_AFTER_BW_MEAS}
+
+# Measure performance counters needed to calculate memory access latency
+# Repeat measurements configured number of times
+cd ${PTRCHASE_DIR}
+for ((lat_meas_rep=1; lat_meas_rep<=${LAT_MEAS_REPS}; lat_meas_rep+=1)); do
+    measure_latency
+done
+cd ${ROOT_DIR}
+
+
+# Terminate stream execution on OSX
+sleep 2s
+pkill stream_mpi.x
+sleep 2s
+
+echo "*********** Done executing iteration."
+
