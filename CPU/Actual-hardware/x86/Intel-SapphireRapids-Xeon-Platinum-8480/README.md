@@ -1,4 +1,4 @@
-# Mess benchmark: Intel Skylake Xeon Platinum 8160
+# Mess benchmark: Intel Sapphire Rapids Xeon Platinum 8480
 
 
 This repository is tuned and modified to generate bandwidth--latency curves on general purpose nodes in MareNostrum 5 supercomputer located in Barcelona Supercomputing Center [[1]](https://www.bsc.es/marenostrum/marenostrum-5), [[2]](https://www.bsc.es/supportkc/docs/MareNostrum5/overview). 
