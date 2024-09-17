@@ -1,5 +1,5 @@
 # Mess benchmark
 
-This is the initial commit of Mess benchmark. It includes the genral structure of therepository. we are updaing it constantly in the following days. 
+Benchmark experiments using the Mess framework to evaluate various memory models in gem5 will be available here. Currently, only the benchmark source code is provided. We are actively working on uploading the complete experiment scripts, the data points from the associated paper, and the final performance curves in the coming weeks.
 
 
