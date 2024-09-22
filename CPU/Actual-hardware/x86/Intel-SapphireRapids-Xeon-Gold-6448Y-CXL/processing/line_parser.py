@@ -112,6 +112,7 @@ class BandwidthPerfLineParser(LineParser):
         self.used_sockets = [0] # This expect array, even if only one value
         self.max_channels = int(config['MEM_MAX_CHANNELS'])
         self.start = False
+        self.getFirstWrite = 0
     
     def parse_line(self, line):
         tokens = line.split(' ')
@@ -126,10 +127,13 @@ class BandwidthPerfLineParser(LineParser):
             return None, None, False
         elif self.start:
             if 'Writes(MB/s):' in tokens[1]:
-                return ['_'.join(['socket' + str(sock), str(tokens[1])]) for sock in self.used_sockets],\
-                    [float(tokens[2].replace(',',''))],\
+                self.getFirstWrite = self.getFirstWrite + 1
+                return ['_'.join(['socket' + str(sock), str(self.getFirstWrite), str(tokens[1])]) for sock in self.used_sockets],\
+                    [float(tokens[2].replace(',',''))+float(tokens[5].replace(',',''))],\
                     False
             elif 'CXL' in tokens[2]:
+                self.start = False
+                self.getFirstWrite = 0
                 return ['_'.join(['socket' + str(sock), str(tokens[3]), str(tokens[3]), str(tokens[4])]) for sock in self.used_sockets],\
                     [float(tokens[5].replace(',',''))],\
                     True
