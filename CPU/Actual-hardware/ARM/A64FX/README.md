@@ -1,20 +1,17 @@
-# Mess benchmark: Intel Skylake Xeon Platinum 8160
+# Mess benchmark: Amazon Graviton 3
 
 TODO: redo for a64fx
 
-This repository is tuned and modified to generate bandwidth--latency curves on MareNostrum 4 supercomputer located in Barcelona Supercomputing Center[[1]](https://www.bsc.es/supportkc/docs/MareNostrum4/intro/). 
+This repository is tuned and modified to generate bandwidth--latency curves on Amazon AWS with 64-core Graviron 3.
 
 
 
 
 ## System configuration and Prerequisites
 
-- SUSE Linux Enterprise Server 12 SP2.
-- Slurm batch processing support.
-- Intel VTune 2017.4.
-- Intel compiler 2023.
-- OneAPI 2023. 
-- Python 3.12.1 with following packages: matplotlib, toml, Pyarrow, and seaborn. 
+- Ubuntu 20.04.5 LTS.
+- Python 3 with following packages: matplotlib, toml, Pyarrow, and seaborn. 
+- spack.  
  
 
 
@@ -50,6 +47,4 @@ echo -1 > /proc/sys/kernel/perf_event_paranoid
 
 
 
-## Refrences
 
-[[1]](https://www.bsc.es/supportkc/docs/MareNostrum4/intro/ ) [https://www.bsc.es/supportkc/docs/MareNostrum4/intro/](https://www.bsc.es/supportkc/docs/MareNostrum4/intro/ ) 
