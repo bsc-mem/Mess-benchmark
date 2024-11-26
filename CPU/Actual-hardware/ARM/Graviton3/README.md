@@ -17,7 +17,7 @@ This repository is tuned and modified to generate bandwidth--latency curves on A
 ## How to run the Mess benchmark 
 
 ```
-# Fisrt, we modifeid the "config/mn4_DDR4-2666.toml" file to represent MareNostrum 4. 
+# Fisrt, we modifeid the "config/graviton3.toml" file to represent our Graviton3 cluster. 
 # Then: 
 ./runner.sh 
 ```
