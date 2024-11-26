@@ -1,9 +1,13 @@
 #!/bin/bash
 
 module purge
-module load fuji
-module load lmbench/3.0-a9
-module load likwid/5.2.2
+module load bsc/1.0
+module load intel/2023.2.0
+module load impi/2021.9.0
+module load oneapi/2023.2.0
+module load mkl/2023.2.0
+
+module load hdf5 python/3.12.1
 
 # for compilation of stream it is necessary
 # otherwise we get the following error: 
@@ -52,7 +56,7 @@ echo "*********** Working dir set. Compiling Stream..."
 cd ${STREAM_DIR}
 
 
-make clean && make
+# make clean && make
 echo "*********** Stream compiled successfully."
 
 
@@ -60,21 +64,21 @@ echo "*********** Working dir set. Compiling Stream_bw..."
 cd ${STREAM_DIR_BW}
 
 
-make clean && make
+# make clean && make
 echo "*********** Stream_BW compiled successfully. Compiling Ptr_chase..."
 
 
 # clear output directories
 cd ${OUTPUT_DIR_LOG}
-rm *
-rm .*
-cd ${OUTPUT_DIR_BW}
-rm *
-rm .*
-cd ${OUTPUT_DIR_LAT}
-rm *
-rm .*
-rm ../../output/*
+# rm *
+# rm .*
+# cd ${OUTPUT_DIR_BW}
+# rm *
+# rm .*
+# cd ${OUTPUT_DIR_LAT}
+# rm *
+# rm .*
+# rm ../../output/*
 
 
 cd ${ROOT_DIR}
@@ -119,21 +123,21 @@ export POINT_REPS=${POINT_REPS}
 
 cd ${PTRCHASE_DIR}
 # # TODO check about the mpicc module or at least add it to the documentation as a required package
-make clean && make
+# make clean && make
 
 echo "*********** Ptr_chase compiled successfully."
 
 # generate input array for pointer chasing
-cd ${ROOT_DIR}
-pjsub submit_arraygen.sh
+# cd ${ROOT_DIR}
+# pjsub submit_arraygen.sh
 
-wait until array is generated...!
-jobsWAitingInTheQueue=$(pjstat | wc -l)
-while [ $jobsWAitingInTheQueue -gt 0 ]
-do
-    sleep 100
-    jobsWAitingInTheQueue=$(pjstat | wc -l)
-done
+# wait until array is generated...!
+# jobsWAitingInTheQueue=$(pjstat | wc -l)
+# while [ $jobsWAitingInTheQueue -gt 0 ]
+# do
+#     sleep 100
+#     jobsWAitingInTheQueue=$(pjstat | wc -l)
+# done
 
 
 # echo "arraygen generated the input of pointer chasing benchmark"
@@ -195,34 +199,34 @@ cd ${ROOT_DIR}
 
 
 
-for ((point_rep=1; point_rep<=${POINT_REPS}; point_rep+=1)); do
-    for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRATIO_STEP)); do
-        for pause in ${PAUSES}; do
+# for ((point_rep=1; point_rep<=${POINT_REPS}; point_rep+=1)); do
+#     for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRATIO_STEP)); do
+#         for pause in ${PAUSES}; do
 
-                echo $rd_percentage > rd_percentage.txt
-                echo $pause > pause.txt
+#                 echo $rd_percentage > rd_percentage.txt
+#                 echo $pause > pause.txt
 
 
-                pjsub submit_bw.job.bash
-                pjsub submit_main.job.bash
+#                 pjsub submit_bw.job.bash
+#                 pjsub submit_main.job.bash
 
-                sleep 20
-                # pjstat --filter "st=RUN"
-                # to avoid submitting too much jobs to slurm
-                jobsWaitingInTheQueue=$(pjstat | wc -l)
-                jobsRunningInTheQueue=$(pjstat --filter "st=RUN" | wc -l)
-                while [ $jobsWaitingInTheQueue -gt $jobsRunningInTheQueue ]
-                do
-                    sleep 20
-                    jobsWaitingInTheQueue=$(pjstat | wc -l)
-                    jobsRunningInTheQueue=$(pjstat --filter "st=RUN" | wc -l)
-                done
+#                 sleep 20
+#                 # pjstat --filter "st=RUN"
+#                 # to avoid submitting too much jobs to slurm
+#                 jobsWaitingInTheQueue=$(pjstat | wc -l)
+#                 jobsRunningInTheQueue=$(pjstat --filter "st=RUN" | wc -l)
+#                 while [ $jobsWaitingInTheQueue -gt $jobsRunningInTheQueue ]
+#                 do
+#                     sleep 20
+#                     jobsWaitingInTheQueue=$(pjstat | wc -l)
+#                     jobsRunningInTheQueue=$(pjstat --filter "st=RUN" | wc -l)
+#                 done
 
             
-        done
+#         done
 
-    done
-done
+#     done
+# done
 
 
 
@@ -242,8 +246,8 @@ done
 # Post-processing #
 ###################
 # echo "start processing data..."
-# PROCESSING_DIR="${ROOT_DIR}/processing/"
-# ${PROCESSING_DIR}/main.py ${OUTPUT_DIR}
+PROCESSING_DIR="${ROOT_DIR}/processing/"
+${PROCESSING_DIR}/main.py ${OUTPUT_DIR}
 
 # TODO something is not being killed when this process finishes, search for kill
 # any process started inside bash script
