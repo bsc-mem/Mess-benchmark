@@ -1,9 +1,7 @@
-# Mess benchmark: Intel Skylake Xeon Platinum 8160
+# Mess benchmark: Power 9 
 
-TODO: redo for IBM power 9
-The log file is empty due to occupying lots of space.
 
-This repository is tuned and modified to generate bandwidth--latency curves on MareNostrum 4 supercomputer located in Barcelona Supercomputing Center[[1]](https://www.bsc.es/supportkc/docs/MareNostrum4/intro/). 
+This repository is tuned and modified to generate bandwidth--latency curves on CTE-Power cluster of MareNostrum 4 supercomputer located in Barcelona Supercomputing Center[[1]](https://www.bsc.es/supportkc/docs/CTE-POWER/intro). 
 
 
 
@@ -11,11 +9,10 @@ This repository is tuned and modified to generate bandwidth--latency curves on M
 ## System configuration and Prerequisites
 
 - SUSE Linux Enterprise Server 12 SP2.
-- Slurm batch processing support.
-- Intel VTune 2017.4.
-- Intel compiler 2023.
-- OneAPI 2023. 
-- Python 3.12.1 with following packages: matplotlib, toml, Pyarrow, and seaborn. 
+- Slurm batch processing support (if you use supercomputers otherwise see the Notes).
+- gcc 9.2.0
+- Openmpi 4.1.2.
+- Python 3.9.0 with following packages: matplotlib, toml, Pyarrow, and seaborn. 
  
 
 
@@ -23,7 +20,7 @@ This repository is tuned and modified to generate bandwidth--latency curves on M
 ## How to run the Mess benchmark 
 
 ```
-# Fisrt, we modifeid the "config/mn4_DDR4-2666.toml" file to represent MareNostrum 4. 
+# Fisrt, we modifeid the "config/power9.toml" file to represent MareNostrum 4. 
 # Then: 
 ./runner.sh 
 ```
@@ -48,9 +45,19 @@ This repository is tuned and modified to generate bandwidth--latency curves on M
 ```
 echo -1 > /proc/sys/kernel/perf_event_paranoid
 ```
+- The log file is empty due to occupying lots of space.
 
+- In this experiments we had sbatch command to submit jobs. If you have access to only one server you need to change sbatch command in `runner.sh` file with sh command. Additionally, at the end of the `submit_main.job` file, you need to make sure you terminate the pricesses that you have started for previous point. To do so, you can use the following command:
+```
+# Terminate stream execution 
+sleep 2s
+pkill stream_mpi.x
+sleep 2s
+```
+
+- Before starting a new set of experiments remember to uncomment rm commands in `runner.sh` file to remove the results of the previous experiments. 
 
 
 ## Refrences
 
-[[1]](https://www.bsc.es/supportkc/docs/MareNostrum4/intro/ ) [https://www.bsc.es/supportkc/docs/MareNostrum4/intro/](https://www.bsc.es/supportkc/docs/MareNostrum4/intro/ ) 
+[[1]](https://www.bsc.es/supportkc/docs/CTE-POWER/intro ) [https://www.bsc.es/supportkc/docs/CTE-POWER/intro](https://www.bsc.es/supportkc/docs/CTE-POWER/intro ) 
