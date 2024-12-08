@@ -4,21 +4,16 @@ Mess benchmark describes the memory system performance with a family of bandwidt
 
 ## Citation
 
-Please cite the following paper if you find this benchmark useful:
+If you find this benchmark useful, please cite the following paper accepted in MICRO 2024, best paper runner-up award.
 
 ```
-@misc{esmailidokht2024messmemorybenchmarkingsimulation,
-      title={A Mess of Memory System Benchmarking, Simulation and Application Profiling}, 
-      author={Pouya Esmaili-Dokht and Francesco Sgherzi and Valeria Soldera Girelli and Isaac Boixaderas and Mariana Carmin and Alireza Monemi and Adria Armejach and Estanislao Mercadal and German Llort and Petar Radojkovic and Miquel Moreto and Judit Gimenez and Xavier Martorell and Eduard Ayguade and Jesus Labarta and Emanuele Confalonieri and Rishabh Dubey and Jason Adlard},
-      year={2024},
-      eprint={2405.10170},
-      archivePrefix={arXiv},
-      primaryClass={cs.AR},
-      url={https://arxiv.org/abs/2405.10170}, 
-}
+@INPROCEEDINGS{10764561,
+  author={Esmaili-Dokht, Pouya and Sgherzi, Francesco and Girelli, Valéria Soldera and Boixaderas, Isaac and Carmin, Mariana and Monemi, Alireza and Armejach, Adrià and Mercadal, Estanislao and Llort, Germán and Radojković, Petar and Moreto, Miquel and Giménez, Judit and Martorell, Xavier and Ayguadé, Eduard and Labarta, Jesus and Confalonieri, Emanuele and Dubey, Rishabh and Adlard, Jason},
+  booktitle={57th IEEE/ACM International Symposium on Microarchitecture (MICRO)}, 
+  title={{A Mess of Memory System Benchmarking, Simulation and Application Profiling}}, 
+  year={2024}}
 ```
 
----To be appear in MICRO 2024
 
 ## Repository structure
 
