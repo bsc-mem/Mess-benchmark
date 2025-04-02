@@ -1,5 +1,6 @@
 # Copyright (c) 2024, Barcelona Supercomputing Center
-# Contact: pouya.esmaili    [at] bsc [dot] es
+# Contact: mess             [at] bsc [dot] es
+#          pouya.esmaili    [at] bsc [dot] es
 #          petar.radojkovic [at] bsc [dot] es
 # All rights reserved.
 #

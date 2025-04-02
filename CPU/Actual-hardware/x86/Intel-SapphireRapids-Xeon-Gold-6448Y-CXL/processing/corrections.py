@@ -1,11 +1,7 @@
-################################################################################
-# Copyright (c) 2023, Valéria S. Girelli
-#                     Pouya Esmaili Dokht
-#                     Mariana Carmin
-#                     Petar Radojkovic
-#                     Paul Carpenter
-#                     Eduard Ayguade
-#                     Contact: valeria.soldera [at] bsc [dot] es
+# Copyright (c) 2024, Barcelona Supercomputing Center
+# Contact: mess             [at] bsc [dot] es
+#          pouya.esmaili    [at] bsc [dot] es
+#          petar.radojkovic [at] bsc [dot] es
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,8 +27,8 @@
 # SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-################################################################################
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 from scipy.signal import savgol_filter
 
 def remove_outliers():
