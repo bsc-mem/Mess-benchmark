@@ -118,3 +118,7 @@ For any further questions and support, please contact us at the email below:
 
 > 📧 **Email:** [mess@bsc.es](mailto:Mess@bsc.es)  
 
+## License
+
+Mess code is released under the [BSD 3-Clause License](LICENSE).
+
