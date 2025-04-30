@@ -120,5 +120,5 @@ For any further questions and support, please contact us at the email below:
 
 ## License
 
-Mess code is released under the [BSD 3-Clause License](LICENSE).
+Mess code is released under the [BSD 3-Clause License](LICENSE.txt).
 
