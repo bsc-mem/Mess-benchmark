@@ -2,7 +2,7 @@
 
 While the kernels for all RISC-V platforms are identical, the workflow for each platform is slightly different for the following reason:
 
-- Different platform support different hardware counter monitoring tools. For example, Intel VTune and PCM only support Intel platform.
+- Different platform support different hardware counter monitoring tools. 
 
 - Even with the same hardware counter monitoring tool, different runtime and sysadmin can provide or limit different access level to the hardware counter. For example, a system with SLRUM is different from a system with PJM batch submission support.  
 

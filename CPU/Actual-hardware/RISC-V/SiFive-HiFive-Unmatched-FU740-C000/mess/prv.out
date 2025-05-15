@@ -1,0 +1,83 @@
+Set GCC compilers as MPI wrappers backend
+unload PYTHON/3.8.12 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH,
+PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH) 
+load PYTHON/3.8.12 (PATH, MANPATH, LD_LIBRARY_PATH, LIBRARY_PATH,
+PKG_CONFIG_PATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH, PYTHONHOME, PYTHONPATH) 
+remove openmpi/4.1.3 (PATH, MANPATH, LD_LIBRARY_PATH)
+load openmpi/4.1.3 (PATH, MANPATH, LD_LIBRARY_PATH)
+remove likwid/5.2.2 (PATH)
+load likwid/5.2.2 (PATH)
+src/stream_mpi.c:123:15: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+  123 | char *usage = "[-r <read_ratio>] [-p <pause>]\n";
+      |               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using CPUID 0x00000000480fd010
+hisi_sccl1_ddrc0/flux_rd/: 11151162 5026268940 5026268940
+hisi_sccl1_ddrc1/flux_rd/: 10708814 5026269730 5026269730
+hisi_sccl1_ddrc2/flux_rd/: 9977308 5026270820 5026270820
+hisi_sccl1_ddrc3/flux_rd/: 10776602 5026271600 5026271600
+hisi_sccl3_ddrc0/flux_rd/: 10619290 5026272320 5026272320
+hisi_sccl3_ddrc1/flux_rd/: 10296604 5026272600 5026272600
+hisi_sccl3_ddrc2/flux_rd/: 9588992 5026272880 5026272880
+hisi_sccl3_ddrc3/flux_rd/: 10246004 5026273400 5026273400
+hisi_sccl5_ddrc0/flux_rd/: 10474360 5026274380 5026274380
+hisi_sccl5_ddrc1/flux_rd/: 10362806 5026274120 5026274120
+hisi_sccl5_ddrc2/flux_rd/: 9547316 5026273520 5026273520
+hisi_sccl5_ddrc3/flux_rd/: 10223188 5026273830 5026273830
+hisi_sccl7_ddrc0/flux_rd/: 8536346 5026274200 5026274200
+hisi_sccl7_ddrc1/flux_rd/: 8393794 5026273420 5026273420
+hisi_sccl7_ddrc2/flux_rd/: 7809902 5026273800 5026273800
+hisi_sccl7_ddrc3/flux_rd/: 8306748 5026273540 5026273540
+hisi_sccl1_ddrc0/flux_wr/: 32601194 5026273750 5026273750
+hisi_sccl1_ddrc1/flux_wr/: 32860666 5026272460 5026272460
+hisi_sccl1_ddrc2/flux_wr/: 32191228 5026271580 5026271580
+hisi_sccl1_ddrc3/flux_wr/: 37259680 5026270250 5026270250
+hisi_sccl3_ddrc0/flux_wr/: 35064124 5026266930 5026266930
+hisi_sccl3_ddrc1/flux_wr/: 34468418 5026264320 5026264320
+hisi_sccl3_ddrc2/flux_wr/: 34804042 5026262370 5026262370
+hisi_sccl3_ddrc3/flux_wr/: 34872364 5026259590 5026259590
+hisi_sccl5_ddrc0/flux_wr/: 29784280 5026256700 5026256700
+hisi_sccl5_ddrc1/flux_wr/: 30147640 5026253480 5026253480
+hisi_sccl5_ddrc2/flux_wr/: 29923406 5026249660 5026249660
+hisi_sccl5_ddrc3/flux_wr/: 30087674 5026246900 5026246900
+hisi_sccl7_ddrc0/flux_wr/: 31012404 5026243590 5026243590
+hisi_sccl7_ddrc1/flux_wr/: 31083006 5026240760 5026240760
+hisi_sccl7_ddrc2/flux_wr/: 30708344 5026238500 5026238500
+hisi_sccl7_ddrc3/flux_wr/: 31072182 5026234980 5026234980
+
+ Performance counter stats for 'system wide':
+
+          11151162      hisi_sccl1_ddrc0/flux_rd/                                   
+          10708814      hisi_sccl1_ddrc1/flux_rd/                                   
+           9977308      hisi_sccl1_ddrc2/flux_rd/                                   
+          10776602      hisi_sccl1_ddrc3/flux_rd/                                   
+          10619290      hisi_sccl3_ddrc0/flux_rd/                                   
+          10296604      hisi_sccl3_ddrc1/flux_rd/                                   
+           9588992      hisi_sccl3_ddrc2/flux_rd/                                   
+          10246004      hisi_sccl3_ddrc3/flux_rd/                                   
+          10474360      hisi_sccl5_ddrc0/flux_rd/                                   
+          10362806      hisi_sccl5_ddrc1/flux_rd/                                   
+           9547316      hisi_sccl5_ddrc2/flux_rd/                                   
+          10223188      hisi_sccl5_ddrc3/flux_rd/                                   
+           8536346      hisi_sccl7_ddrc0/flux_rd/                                   
+           8393794      hisi_sccl7_ddrc1/flux_rd/                                   
+           7809902      hisi_sccl7_ddrc2/flux_rd/                                   
+           8306748      hisi_sccl7_ddrc3/flux_rd/                                   
+          32601194      hisi_sccl1_ddrc0/flux_wr/                                   
+          32860666      hisi_sccl1_ddrc1/flux_wr/                                   
+          32191228      hisi_sccl1_ddrc2/flux_wr/                                   
+          37259680      hisi_sccl1_ddrc3/flux_wr/                                   
+          35064124      hisi_sccl3_ddrc0/flux_wr/                                   
+          34468418      hisi_sccl3_ddrc1/flux_wr/                                   
+          34804042      hisi_sccl3_ddrc2/flux_wr/                                   
+          34872364      hisi_sccl3_ddrc3/flux_wr/                                   
+          29784280      hisi_sccl5_ddrc0/flux_wr/                                   
+          30147640      hisi_sccl5_ddrc1/flux_wr/                                   
+          29923406      hisi_sccl5_ddrc2/flux_wr/                                   
+          30087674      hisi_sccl5_ddrc3/flux_wr/                                   
+          31012404      hisi_sccl7_ddrc0/flux_wr/                                   
+          31083006      hisi_sccl7_ddrc1/flux_wr/                                   
+          30708344      hisi_sccl7_ddrc2/flux_wr/                                   
+          31072182      hisi_sccl7_ddrc3/flux_wr/                                   
+
+       5.026558750 seconds time elapsed
+
