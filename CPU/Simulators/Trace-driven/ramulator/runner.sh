@@ -45,12 +45,11 @@ SMOOTH_SAVGOL_POLYORDER=3
 # cd ../../
 
 
-exit 0
 # rm -r measurment_*
 
 # Define an array of constant values
-# constant_values=(0 1 3 5 7 10 12 15 17 20 22 25 27 30 32 35 37 40 42 45 50 75 200 400 1000)
-constant_values=(0)
+constant_values=(0 1 3 5 7 10 12 15 17 20 22 25 27 30 32 35 37 40 42 45 50 75 200 400 1000)
+# constant_values=(0)
 
 
 for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRATIO_STEP)); do
