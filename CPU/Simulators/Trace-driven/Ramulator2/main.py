@@ -44,7 +44,7 @@ def parse_results_file(filename, measurment_dir_name):
 
             if tokens[0] == "memory_system_cycles:":
                 mem_cycles = float(tokens[1])
-            elif tokens[0] == "avg_read_latency_0:":
+            elif tokens[0] == "read_latency_0:":
                 read_latency = float(tokens[1])
             elif tokens[0] == "total_num_read_requests:":
                 read_counts = float(tokens[1])
@@ -57,14 +57,15 @@ def parse_results_file(filename, measurment_dir_name):
             # elif tokens[0] == "ramulator.row_conflicts_channel_0_core":
             #     row_conflicts_channel_0_core = float(tokens[1])
 
-
+    # make average over total read_latency. The average from simulation output does not make sense.
+    read_latency = read_latency / read_counts
     
     bandwidth = frequency*64*(read_counts + write_counts) / mem_cycles
     
     # hit_rate = row_hits_channel_0_core / (row_hits_channel_0_core + row_misses_channel_0_core + row_conflicts_channel_0_core)
     # miss_rate = row_misses_channel_0_core / (row_hits_channel_0_core + row_misses_channel_0_core + row_conflicts_channel_0_core)
     # empty_rate = row_conflicts_channel_0_core / (row_hits_channel_0_core + row_misses_channel_0_core + row_conflicts_channel_0_core)
-    
+
 
 
 
@@ -97,6 +98,7 @@ def main(args):
             final_df = pd.concat([final_df, tmp_df])
 
     final_df.to_csv("results.csv", index=False)
+
 
 if __name__ == "__main__":
     main(sys.argv)
