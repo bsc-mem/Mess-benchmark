@@ -25,7 +25,7 @@ export CXX=clang++
 # /home/bsc/bsc018278/zsimdramsim3/acmSimulation/Ramulator_amd/ramulator-master/ramulator /home/bsc/bsc018278/zsimdramsim3/acmSimulation/Ramulator_amd/ramulator-master/configs/DDR4-config.cfg --mode=cpu ramulator.trace 
 
 
-/home/bsc/bsc018278/zsimdramsim3/acmSimulation/ramulator2/build/ramulator2 -f /gpfs/scratch/bsc18/bsc18278/bw-lat/ramulator2/measurment_${rd_percentage}_${constant_value}/config.cfg
+./ramulator2/build/ramulator2 -f ./ramulator2/measurment_${rd_percentage}_${constant_value}/config.cfg
 
 #module load intel 
 #module load HDF5 PYTHON/2.7.3  SCONS/2.3.0 # for Nord 2

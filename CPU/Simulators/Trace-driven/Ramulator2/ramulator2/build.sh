@@ -1,6 +1,8 @@
-module load anaconda
+# modules needed for running the script on MareNostrum 4 (CTE-AMD)
+# module load anaconda
+# source activate gem5
 
-source activate gem5
+
 export CC=clang
 export CXX=clang++
 

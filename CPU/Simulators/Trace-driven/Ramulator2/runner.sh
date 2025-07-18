@@ -45,7 +45,7 @@ SMOOTH_SAVGOL_POLYORDER=3
 #rm -r measurment_*
 
 # Define an array of constant values
-constant_values=(0 2 5 10 15 20 22 25 27 30 32 35 37 40 42 45 50 75 200 400 1000 5000 20000 50000)
+constant_values=(0 2 5 10 15 20 22 25 27 30 32 35 37 40 42 45 50 75 200 400 1000 5000 20000 50000 100000)
 
 # constant_values=(100000)
 
@@ -54,7 +54,7 @@ for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRA
 #     for pause in ${PAUSES}; do
 
 
-	# to avoid submitting too much jobs to slurm
+	# to avoid submitting too much jobs to slurm (comment )
 	jobsWAitingInTheQueue=$(squeue | wc -l)
 	while [ $jobsWAitingInTheQueue -gt 300 ]
 	do
@@ -99,7 +99,11 @@ for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRA
 		cp ../submit.batch ./
 		cp ../config.cfg ./
 
+		# if you want to use batch system of supercomputer
 		sbatch submit.batch
+
+		# # if you want to run it on a single server
+		sh submit.batch
 
 		# cp ../sb.cfg ./
 
