@@ -103,7 +103,7 @@ for ((rd_percentage=RWRATIO_MIN; rd_percentage<=RWRATIO_MAX; rd_percentage+=RWRA
 		sbatch submit.batch
 
 		# # if you want to run it on a single server
-		sh submit.batch
+		# sh submit.batch
 
 		# cp ../sb.cfg ./
 
