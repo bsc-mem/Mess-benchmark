@@ -34,18 +34,15 @@ export OUTPUT_DIR="${ROOT_DIR}/measuring/${OUTPUT}"
 export OUTPUT_DIR_BW="${OUTPUT_DIR}/bw"
 export OUTPUT_DIR_LAT="${OUTPUT_DIR}/lat"
 export OUTPUT_DIR_LOG="${OUTPUT_DIR}/log"
-export OUTPUT_DIR_SAMPLING="${OUTPUT_DIR}/sampling"
-export OUTPUT_DIR_POWER="${OUTPUT_DIR}/power"
+
 
 mkdir -p ${OUTPUT_DIR_BW}
 mkdir -p ${OUTPUT_DIR_LAT}
 mkdir -p ${OUTPUT_DIR_LOG}
-mkdir -p ${OUTPUT_DIR_SAMPLING}
-mkdir -p ${OUTPUT_DIR_POWER}
+
 
 export STREAM_DIR="${ROOT_DIR}/src/stream_mpi/"
 export PTRCHASE_DIR="${ROOT_DIR}/src/ptr_chase/"
-export PTRCHASE_DIR_POWER="${ROOT_DIR}/src/ptr_chase_power/"
 
 echo "*********** Working dir set. Compiling Stream..."
 cd ${STREAM_DIR}
@@ -83,12 +80,6 @@ echo "*********** Starting Mess..."
 # cd ${OUTPUT_DIR_LAT}
 # rm *
 # rm .*
-# cd ${OUTPUT_DIR_SAMPLING}
-# rm -r *
-# rm -r .*
-# cd ${OUTPUT_DIR_POWER}
-# rm *
-# rm .*
 # rm ../../output/*
 
 
@@ -102,8 +93,6 @@ export pause=${pause}
 export STREAM_LOG_FILE=${STREAM_LOG_FILE}
 export OUTPUT_DIR_BW=${OUTPUT_DIR_BW}
 export OUTPUT_DIR_LOG=${OUTPUT_DIR_LOG}
-export OUTPUT_DIR_SAMPLING=${OUTPUT_DIR_SAMPLING}
-export OUTPUT_DIR_POWER=${OUTPUT_DIR_POWER}
 export BW_TOOL=${BW_TOOL}
 export BW_TOOL_PATH=${BW_TOOL_PATH}
 export BW_TOOL_CORES=${BW_TOOL_CORES}
