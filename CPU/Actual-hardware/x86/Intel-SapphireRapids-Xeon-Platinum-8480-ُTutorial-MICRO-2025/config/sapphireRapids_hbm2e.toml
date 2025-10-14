@@ -1,0 +1,56 @@
+[Platform]
+name = "Juelich Intel Max Nodes"
+cpu = "Intel Xeon CPU Max 9462 @ 2.7GHz"
+cpu-freq = 2.7
+motherboard = "Intel xxx"
+mem = "brandname model 4GB"
+mem-type = "HBM2E"
+mem-freq = 2666
+mem-max-channels = 4
+stlb-hit-latency = 4.3
+
+[Experiments]
+stream-core-list = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,57,58,59,60,61,62,63"
+stream-core-count = 62
+stream-core-count-socket = 31 
+stream-numactl-additional-args = ""
+ptrchase-core = "0"
+ptrchase-numactl-additional-args = ""
+
+rwratio-min = 0
+rwratio-max = 100
+rwratio-step = 2
+
+stream-pauses = [0, 2, 5, 7, 10, 12, 15, 17, 20, 22, 25, 27, 30, 32, 35, 37, 40, 42, 45, 47, 50, 52, 55, 57, 60, 62, 65, 67, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220, 240, 260, 280, 300, 320, 340, 360, 380, 415, 450, 500, 550, 576, 600, 650, 700, 750, 800, 850, 900, 950, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 4000, 5000, 20000, 40000, 70000, 100000, 300000, 500000, 750000, 1000000]
+
+
+point-reps = 3
+bw-meas-reps = 1
+lat-meas-reps = 1
+
+time-stream-stabilize= 15
+time-after-bw = 4
+time-after-stream-termination = 0
+
+[Counters]
+bw-tool = "perf"
+bw-tool-path = "perf"
+bw-tool-cores = "0"
+bw-tool-sample-time = "5s"
+bw-tool-counters="""\
+unc_m_cas_count.rd,\
+unc_m_cas_count.wr,\
+"""
+lat-tool = "perf"
+lat-tool-path = "perf"
+lat-tool-counters = "cycles:u,instructions:u,r2008:u,r1008:u"
+
+[Processing]
+smooth-savgol-window-length = 11
+smooth-savgol-polyorder = 3
+
+
+[Benchmarks]
+ptrchase-num-instructions = 200000000
+ptrchase-num-iterations = 5000
+ptrchase-array-size = "1 * 1024 * 1024 * 1024" 
