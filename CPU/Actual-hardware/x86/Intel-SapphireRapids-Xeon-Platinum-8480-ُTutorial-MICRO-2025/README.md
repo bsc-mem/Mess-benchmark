@@ -81,20 +81,32 @@ Below figure illustrates the workflow employed by Mess to create bandwidth--late
 - **ptrchase-num-iterations:** Recommended value: **5000**.  
   Lower values can increase **L1i TLB misses**, while higher values add loop overhead.
 
-- **ptrchase-array-size:** Dataset size for the pointer-chase benchmark.  
-  It should be at least **4× larger than the LLC**.  
-  Avoid excessively large arrays, as they can introduce TLB overhead.  
-  The goal is to approximate **0% cache hit** and **100% TLB hit** conditions — we never reach this perfectly, but we aim to get as close as possible.
+- **ptrchase-array-size:** Dataset size for the pointer-chase benchmark. It should be at least **4× larger than the LLC**. Avoid excessively large arrays, as they can introduce TLB overhead. The goal is to approximate **0% cache hit** and **100% TLB hit** conditions — we never reach this perfectly, but we aim to get as close as possible.
 
 
 
-2. For each experiment, initially, we **setup** the experiment configuration, setting parameters such as read/write ratio and memory stress level. These settings are utilized by the traffic generator to stress main memory. For hugh stress level, the memory traffic generator reaches to the highest issue rate of the load and store operations, thereby creating the highest significant pressure on the memory system. Typically (unless over-saturation exists in the platform, this is the point of the maximum measured bandwidth and latency. However, when the srress level is low, the memory traffic generator spends practically all the time issuing nop instructions, generating negligible memory traffic. In this case, the main memory remains unloaded and unloaded latency can be measured. 
+2. For each experiment, we first **set up** the experiment configuration, defining parameters such as the **read/write ratio** and **memory stress level (i.e. pause value)**. These parameters are used by the traffic generator to stress the main memory. At **low pause value**, the traffic generator reaches the maximum issue rate of load and store operations, creating the greatest pressure on the memory system. Typically—unless the platform becomes over-saturated—this point corresponds to the **maximum measured bandwidth and latency**. At **high pause value**, the traffic generator spends most of its time issuing **NOP instructions**, producing negligible memory traffic. In this case, the main memory remains mostly idle, allowing the measurement of **unloaded latency**.
+
+- **Note:** This step is implemented as a simple loop over **read/write ratios** and **pause values**.
+
+**The remaining steps are implemented in `submit_main.job`, which is called within the loop described in Step 2.**
 
 3. After setting up the experiment, the workflow **runs** the memory traffic generator on all the cores in each socket except core 0 to stress the main memory with the configured workload.
 
-4. Subsequently, we allow a specific duration for memory bandwidth utilization to **stabilize**. This duration is determined empirically and is crucial for the CPU to reach a high-performance state (e.g., maximum voltage/frequency settings) and achieve stability. 
+- **The traffic generator sometimes generate gib log files. If everything works fine and you do not need the log files just redirect them to /dev/null (e.g. add  "> /dev/null" to the end of the line of traffic generator code).**
 
-5. Afterwards, we run the pointer-chase benchmark on core 0 while the traffic generator is running on the rest of the cores. Then, we **measure latency and bandwidth** for this experimental point by utilizing available hardware counters. Measuring the latency of the actual hardware requires profiling overheads such as secondary TLB hits and the cycles consumed during page walking to exclude OS-dependent overheads. To measure bandwidth, we employ uncore counters that count the number of CAS commands issued by the memory controller. Each measurement contributes to a single point of a single curve. To generate the complete curve, this process is iterated for all points with the same read/write ratio, followed by a repetition for other curves with varying read/write ratios. Following this procedure, we replicate the entire set of experiments to enhance the reliability of our findings as many times as specified in the configuration file.
+4. Subsequently, we allow a specific duration for memory bandwidth utilization to **stabilize**.  
+This duration is determined empirically and is crucial for the CPU to reach a **steady high-performance state** (e.g., maximum voltage and frequency) before measurements begin.
+
+- **Note:** First-generation servers or test platforms usually require **a longer stabilization time**.  
+Always verify that measurements are taken **only after performance values have stabilized**.  
+You can test this by measuring the target metric (latency or bandwidth) multiple times and comparing the results to ensure consistency.
+
+
+5. Afterwards, we run the pointer-chase benchmark on core 0 while the traffic generator is running on the rest of the cores. Then, we **measure latency and bandwidth** for this experimental point by utilizing available hardware counters. Measuring the latency of the actual hardware requires profiling overheads such as secondary TLB hits and the cycles consumed during page walking to exclude OS-dependent overheads. To measure bandwidth, we employ uncore counters that count the number of CAS commands issued by the memory controller. Each measurement contributes to a single point of a single curve. To generate the complete curve, this process is iterated for all points with the same read/write ratio, followed by a repetition for other curves with varying read/write ratios. Following this procedure, we replicate the entire set of experiments to enhance the reliability of our findings as many times as specified in the configuration file. 
+
+- **Pitfall of pointer-chase:** access to counters. TLB overhead. LMbench TLB kernel. Using huge page is highly suggested as well. 
+- **Pitfall of traffic generator:** Beware of hardcoded traps. traffic generator (stream_mpi.c source code) is executed with both srun command and mpi_runner commands. when using srun, many mpi commands in the code cannot be used (e.g. commands to get the number of ranks or parallel processes). This number is hardcoded in the traffic generator in those case. If this is the case in the source code, set number of rank to number of cores that are going to be used for traffic generator. 
 
 6. Afterward, when all the points are measured (i.e., **check finish** is positive), we proceed to the post-processing phase. As each experimental point is repeated at least three times, we can compute the mean and standard deviations. 
 
