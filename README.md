@@ -1,6 +1,6 @@
 # Mess benchmark
 
-> **Deprecated:** This repository is retained as the artifact for the MICRO 2024 paper *A Mess of Memory System Benchmarking, Simulation and Application Profiling*. For the current benchmark and future development, use [Mess](https://github.com/bsc-mem/Mess). For up-to-date system curves, use [Mess-Results](https://github.com/bsc-mem/Mess-Results).
+> ⚠️ **Deprecated:** This repository is retained as the artifact for the MICRO 2024 paper *A Mess of Memory System Benchmarking, Simulation and Application Profiling*. For the current benchmark and future development, use [Mess](https://github.com/bsc-mem/Mess). For up-to-date system curves, use [Mess-Results](https://github.com/bsc-mem/Mess-Results).
 
 Mess benchmark describes the memory system performance with a family of bandwidth--latency curves. The benchmark covers the full range of the memory traffic intensity, from the unloaded to fully-saturated memory system. It also considers numerous compositions of read and write operations. The Mess benchmark is designed for holistic and detailed memory system characterization, and it is easily adaptive to different target platforms. The current benchmark release covers all major CPU and GPU ISAs: x86, ARM, Power, RISC-V, and NVIDIA’s Parallel Thread Execution (PTX).
 
